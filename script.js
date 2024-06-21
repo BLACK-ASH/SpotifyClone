@@ -1,9 +1,9 @@
-console.log("i am runnig");
+console.log("i am runnig v2");
 let track;
-let currentMusic = new Audio(`/music/Alan%20Walker,%20Sabrina%20Carpenter%20&amp;%20Farruko%20-%20On%20My%20Way.mp3`);
+let currentMusic = new Audio('http://127.0.0.1:3000/music/Andra%20Day%20-%20Rise%20Up.mp3');
 
 async function getSongs() {
-    let m = await fetch('http://127.0.0.1:3000/music');
+    let m = await fetch('/music');
     m = await m.text()
     // console.log(m)
     let div = document.createElement("div");
@@ -19,7 +19,7 @@ async function getSongs() {
     return songs
 }
 function playMusic(e) {
-    currentMusic.src ="/music/"+ e + ".mp3"
+    currentMusic.src ="/music/"+ e + ".mp3";
     currentMusic.play()
     document.querySelector(".songName").innerHTML=e;
 }
@@ -34,24 +34,25 @@ function convertSecondsToMinutes(seconds) {
     // Return the formatted time string
     return `${paddedMinutes}:${paddedSeconds}`;
 }
+function getSongName(url) {
+    // Extract the filename from the URL
+    const filename = url.substring(url.lastIndexOf('/') + 1);
 
+    // Decode the URI to handle encoded characters
+    const decodedFilename = decodeURIComponent(filename);
+
+    // Remove the file extension
+    const songName = decodedFilename.replace('.mp3', '');
+
+    return songName;
+}
+let songs
 async function main() {
-    let songs = await getSongs()
+ songs = await getSongs()
     let list = document.querySelector(".yourDownloadsList")
-    // console.log(list)
+    
     songs.forEach(song => {
-        function getSongName(url) {
-            // Extract the filename from the URL
-            const filename = url.substring(url.lastIndexOf('/') + 1);
-
-            // Decode the URI to handle encoded characters
-            const decodedFilename = decodeURIComponent(filename);
-
-            // Remove the file extension
-            const songName = decodedFilename.replace('.mp3', '');
-
-            return songName;
-        }
+  
 
         let url = song;
         let songName = getSongName(url);
@@ -73,8 +74,12 @@ async function main() {
             playMusic(element.querySelector(".song").innerHTML.trim())
             document.querySelector(".playImg").src = "/logos/pause.svg"
             // console.log(element)
+          
         })
     });
+    currentMusic.src="/music/"+ getSongName(songs[0]).trim() + ".mp3";
+    document.querySelector(".songName").innerHTML= getSongName(songs[0]).trim();
+
     currentMusic.addEventListener("timeupdate",()=>{
         
         document.querySelector(".duration").innerHTML=convertSecondsToMinutes(currentMusic.currentTime)+"/"+convertSecondsToMinutes(currentMusic.duration);
@@ -94,5 +99,19 @@ async function main() {
         document.querySelector(".circle").style.left=e.offsetX/e.target.getBoundingClientRect().width*100+"%"
        currentMusic.currentTime= currentMusic.duration*e.offsetX/e.target.getBoundingClientRect().width
     })
+    document.querySelector(".previous").addEventListener("click",(e)=>{
+        let index= songs.indexOf(currentMusic.src)
+        if(index-1 >= 0){
+          playMusic(getSongName(songs[index-1]).trim());
+          document.querySelector(".playImg").src = "/logos/pause.svg"
+        }
+      })
+    document.querySelector(".next").addEventListener("click",(e)=>{
+        let index= songs.indexOf(currentMusic.src)
+        if(index+1 < songs.length){
+          playMusic(getSongName(songs[index+1]).trim());
+          document.querySelector(".playImg").src = "/logos/pause.svg"
+        }
+      })
 }
 main()
