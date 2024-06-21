@@ -1,0 +1,31 @@
+.bgGrey{
+    background-color: #121212;
+}
+.flex{
+    display: flex;
+    gap: 10px;
+}
+.check{
+border: solid white;
+}
+.p1{
+    padding: 10px;
+} 
+.m1{
+    margin: 10px;
+}
+.m2{
+    margin: 20px;
+}
+.round{
+    border-radius: 7px;
+}
+.itemCenter{
+    align-items: center;
+}
+.contentCenter{
+    justify-content: center;
+}
+.round1{
+    border-radius: 70px;
+}
