@@ -1,4 +1,4 @@
-console.log("i am runnig v3");
+console.log("i am runnig v4");
 let track;
 let currentMusic = new Audio('https://github.com/BLACK-ASH/SpotifyClone/blob/main/music/Andra%20Day%20-%20Rise%20Up.mp3');
 
@@ -19,7 +19,7 @@ async function getSongs() {
     return songs
 }
 function playMusic(e) {
-    currentMusic.src ="/music/"+ e + ".mp3";
+    currentMusic.src ="/blob/main/music/"+ e + ".mp3";
     currentMusic.play()
     document.querySelector(".songName").innerHTML=e;
 }
@@ -72,12 +72,12 @@ async function main() {
         element.addEventListener("click", e => {
             //    console.log(element.querySelector(".song").innerHTML)
             playMusic(element.querySelector(".song").innerHTML.trim())
-            document.querySelector(".playImg").src = "/logos/pause.svg"
+            document.querySelector(".playImg").src = "/blob/main/logos/pause.svg"
             // console.log(element)
           
         })
     });
-    currentMusic.src="/music/"+ getSongName(songs[0]).trim() + ".mp3";
+    currentMusic.src="/blob/main/music/"+ getSongName(songs[0]).trim() + ".mp3";
     document.querySelector(".songName").innerHTML= getSongName(songs[0]).trim();
 
     currentMusic.addEventListener("timeupdate",()=>{
@@ -89,10 +89,10 @@ async function main() {
     document.querySelector(".playImg").addEventListener("click",()=>{
         if(currentMusic.paused){
             currentMusic.play()
-          document.querySelector(".playImg").src = "/logos/pause.svg"
+          document.querySelector(".playImg").src = "/blob/main/logos/pause.svg"
         }else{
             currentMusic.pause()
-            document.querySelector(".playImg").src = "/logos/play1.svg"
+            document.querySelector(".playImg").src = "/blob/main/logos/play1.svg"
         }
     })
     document.querySelector(".seekbar").addEventListener("click",(e)=>{
@@ -103,14 +103,14 @@ async function main() {
         let index= songs.indexOf(currentMusic.src)
         if(index-1 >= 0){
           playMusic(getSongName(songs[index-1]).trim());
-          document.querySelector(".playImg").src = "/logos/pause.svg"
+          document.querySelector(".playImg").src = "/blob/main/logos/pause.svg"
         }
       })
     document.querySelector(".next").addEventListener("click",(e)=>{
         let index= songs.indexOf(currentMusic.src)
         if(index+1 < songs.length){
           playMusic(getSongName(songs[index+1]).trim());
-          document.querySelector(".playImg").src = "/logos/pause.svg"
+          document.querySelector(".playImg").src = "/blob/main/logos/pause.svg"
         }
       })
 }
