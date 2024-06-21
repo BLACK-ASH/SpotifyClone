@@ -1,6 +1,6 @@
-console.log("i am runnig v2");
+console.log("i am runnig v3");
 let track;
-let currentMusic = new Audio('http://127.0.0.1:3000/music/Andra%20Day%20-%20Rise%20Up.mp3');
+let currentMusic = new Audio('https://github.com/BLACK-ASH/SpotifyClone/blob/main/music/Andra%20Day%20-%20Rise%20Up.mp3');
 
 async function getSongs() {
     let m = await fetch('/music');
